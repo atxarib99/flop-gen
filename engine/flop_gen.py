@@ -30,16 +30,16 @@ weights = False
 #how many to generate
 generate = 5
 
-my_filters.append(HighestCard(8))
+#my_filters.append(HighestCard(8))
 my_filters.append(Texture('m'))
-my_filters.append(Suit('Heart'))
+my_filters[-1].invert()
 
 if weights:
     while generate > 0:
         deck = Deck(numdecks=1)
         board = (deck.nextCard(), deck.nextCard(), deck.nextCard())
         #check if any filters are invalidated
-        if False in [True if filter.check(board) else False for filter in my_filters]:
+        if False in [True if filter.validate(board) else False for filter in my_filters]:
             continue
         #otherwise check if board already in previous
         exists = False
@@ -59,7 +59,7 @@ else:
         deck = Deck(numdecks=1)
         board = (deck.nextCard(), deck.nextCard(), deck.nextCard())
         #check if any filters are invalidated
-        if False in [True if filter.check(board) else False for filter in my_filters]:
+        if False in [True if filter.validate(board) else False for filter in my_filters]:
             continue
         #otherwise check if board already in previous
         exists = False
