@@ -1,7 +1,11 @@
 from Deck import Deck
+from Card import Card
 from filters.highest_card import HighestCard
 from filters.suit import Suit
+from filters.pairing import Pairing
 from filters.texture import Texture
+from filters.connectivity import Connectivity
+from filters.highest_card_at_least import HighestCardAtLeast
 
 deck = Deck(numdecks=1)
 
@@ -28,13 +32,19 @@ connectivity = None
 weights = False
 
 #how many to generate
-generate = 5
+generate = 20
 
-#my_filters.append(HighestCard(8))
-my_filters.append(Texture('m'))
-my_filters[-1].invert()
+monotone_filter = [Texture('m')]
+paired_filter = [Pairing('unpaired').invert()]
+connected_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('connected')]
+high_gutshot_possible_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('semi_connected_high'), HighestCardAtLeast(11)]
+low_not_connected_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('connected').invert(), HighestCard(10)]
+high_no_gutshot_possible_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('semi_connected_high').invert(), Connectivity('connected').invert(), HighestCardAtLeast(11)]
+
+my_filters = high_no_gutshot_possible_filter
 
 if weights:
+    # Generate 1m flops
     while generate > 0:
         deck = Deck(numdecks=1)
         board = (deck.nextCard(), deck.nextCard(), deck.nextCard())
@@ -76,5 +86,9 @@ else:
 
 #psudo: add cards 1 at a time, after each deck.remove(card) if not filter.check(board+card) for filter in filters
 
+for board in boards:
+    sorted_board = reversed(sorted(list(board), key=(lambda card: card.evaluate())))
+    for card in sorted_board:
+        print(card, end="")
+    print()
 
-print(boards)

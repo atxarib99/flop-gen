@@ -5,21 +5,23 @@ class Connectivity(Filter):
 
     def __init__(self, connectivity: str):
         self.valid_input(connectivity)
-        
-        Filter.__init__(filter_val=connectivity)
+        self.connectivity = connectivity
+        Filter.__init__(self, filter_val=connectivity)
 
 
     def check(self, board):
-        if self.connectivity == 'unconnected':
-            #each card must be at least 5 apart
-            return self.distance(board, 5)
-        if self.connectivity == 'semi':
-            #each card must be at least 4 apart
-            return self.distance(board, 4)
-        if self.connectivity == 'full':
-            #each card must be at least 3 apart
-            return self.distance(board, 3)
+        # board sorted low to high
+        sorted_board = sorted(list(board), key=(lambda card: card.evaluate()))
 
+        if self.connectivity == 'disconnected':
+            return self.distance(board, 5)
+        if self.connectivity == 'semi_connected_low':
+            return sorted_board[1].evaluate() - sorted_board[0].evaluate() <= 4 and not(sorted_board[2].evaluate() - sorted_board[0].evaluate() <= 4)
+        if self.connectivity == 'semi_connected_high':
+            return (sorted_board[2].evaluate() - sorted_board[1].evaluate() <= 4) and not(sorted_board[2].evaluate() - sorted_board[0].evaluate() <= 4)
+        if self.connectivity == 'connected':
+            return sorted_board[2].evaluate() - sorted_board[0].evaluate() <= 4
+        
     def distance(self, board, distance):
         if abs(board[0].evaluate() - board[1].evaluate()) < distance:
             return False
@@ -31,5 +33,5 @@ class Connectivity(Filter):
         return True
 
     def valid_input(self, connectivity):
-        assert connectivity == 'unconnected' or connectivity == 'semi' or connectivity == 'full', "Texture must be one of the following: (unconnected, semi, full)"
+        assert connectivity in ['disconnected', 'semi_connected_low', 'semi_connected_high', 'connected'], "Texture must be one of the following: ('disconnected', 'semi_connected_low', 'semi_connected_high', 'connected')"
 

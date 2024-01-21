@@ -11,6 +11,7 @@ class Filter(ABC):
 
     def invert(self):
         self.isInverted = True
+        return self
 
     def validate(self, Board):
         output = self.check(Board)

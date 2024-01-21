@@ -1,9 +1,8 @@
 
 from filters.filter import Filter
-from Card import Card
 class HighestCard(Filter):
 
-    def __init__(self, highest_card: Card):
+    def __init__(self, highest_card):
         
         Filter.__init__(self, filter_val=highest_card)
 
