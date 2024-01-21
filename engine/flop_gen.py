@@ -32,7 +32,7 @@ connectivity = None
 weights = False
 
 #how many to generate
-generate = 20
+generate = 100
 
 monotone_filter = [Texture('m')]
 paired_filter = [Pairing('unpaired').invert()]
@@ -41,7 +41,7 @@ high_gutshot_possible_filter = [Texture('m').invert(), Pairing('unpaired'), Conn
 low_not_connected_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('connected').invert(), HighestCard(10)]
 high_no_gutshot_possible_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('semi_connected_high').invert(), Connectivity('connected').invert(), HighestCardAtLeast(11)]
 
-my_filters = high_no_gutshot_possible_filter
+my_filters = high_gutshot_possible_filter
 
 if weights:
     # Generate 1m flops
