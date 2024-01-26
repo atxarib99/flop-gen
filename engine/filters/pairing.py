@@ -6,7 +6,6 @@ class Pairing(Filter):
     def __init__(self, pairing: str):
         self.valid_input(pairing)
         self.pairing = pairing
-        
         Filter.__init__(self, filter_val=pairing)
 
 

@@ -7,7 +7,6 @@ class Suit(Filter):
         
         Filter.__init__(self, filter_val=suit)
 
-
     def check(self, board):
         for card in board:
             if card.suit != self.filter_val:
