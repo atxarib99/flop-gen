@@ -21,6 +21,8 @@ def board_compare(board, other):
             return 'tt'
         elif len(set(suits)) == 3:
             return 'r'
+        elif len(set(suits)) == 1:
+            return 'm'
         print('youre an absolute dumbass somehow')
         print(board)
         exit(1)
@@ -38,7 +40,7 @@ def board_compare(board, other):
 weights = False
 
 #how many to generate
-generate = 50 
+generate = 75
 
 monotone_filter = [Texture('m')]
 paired_filter = [Pairing('unpaired').invert()]
@@ -47,7 +49,7 @@ high_gutshot_possible_filter = [Texture('m').invert(), Pairing('unpaired'), Conn
 low_not_connected_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('connected').invert(), HighestCard(10)]
 high_no_gutshot_possible_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('semi_connected_high').invert(), Connectivity('connected').invert(), HighestCardAtLeast(11)]
 
-my_filters = low_not_connected_filter 
+my_filters = monotone_filter
 
 if weights:
     # Generate 1m flops
