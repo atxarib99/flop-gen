@@ -3,6 +3,8 @@ from Card import Card
 from filters.filter import Filter
 class Connectivity(Filter):
 
+    options = ['disconnected', 'semi_connected_low', 'semi_connected_high', 'connected']
+
     def __init__(self, connectivity: str):
         self.valid_input(connectivity)
         self.connectivity = connectivity
@@ -31,7 +33,4 @@ class Connectivity(Filter):
             return False
 
         return True
-
-    def valid_input(self, connectivity):
-        assert connectivity in ['disconnected', 'semi_connected_low', 'semi_connected_high', 'connected'], "Texture must be one of the following: ('disconnected', 'semi_connected_low', 'semi_connected_high', 'connected')"
 

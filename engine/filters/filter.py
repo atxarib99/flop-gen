@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
+import itertools
 class Filter(ABC):
+
+    options = []
 
     def __init__(self, filter_val):
         self.filter_val = filter_val
@@ -16,5 +19,8 @@ class Filter(ABC):
     def validate(self, Board):
         output = self.check(Board)
         return ((not output) if self.isInverted else output)
+
+    def valid_input(self, inp):
+        assert inp in self.options, (type(self).__name__ + " must be one of the following: " + str(self.options))
 
 

@@ -3,6 +3,8 @@ from filters.filter import Filter
 from Card import Card
 class Texture(Filter):
 
+    options = ["rainbow", "two-tone", "monotone"]
+
     def __init__(self, texture: str):
         self.valid_input(texture)
         
@@ -10,13 +12,10 @@ class Texture(Filter):
 
 
     def check(self, board):
-        if self.filter_val == 'r':
+        if self.filter_val == 'rainbow':
             return len(set([card.suit for card in board])) == 3
-        if self.filter_val == 'tt':
+        if self.filter_val == 'two-tone':
             return len(set([card.suit for card in board])) == 2
-        if self.filter_val == 'm':
+        if self.filter_val == 'monotone':
             return len(set([card.suit for card in board])) == 1
-
-    def valid_input(self, texture):
-        assert texture == 'r' or texture == 'tt' or texture == 'm', "Texture must be one of the following: (r, tt, m)"
 
