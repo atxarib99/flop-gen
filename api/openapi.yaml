@@ -31,7 +31,21 @@ components:
         filters:
           type: array
           items:
-            $ref: '#/components/schemas/Filter'
+            type: object
+            properties:
+              name:
+                type: string
+              selection:
+                type: string
+        engine:
+          type: object
+          properties:
+            flops:
+              type: integer
+              default: 100
+            weights:
+              type: boolean
+              default: false
 
   requestBodies:
     GenerateRequest:
@@ -45,46 +59,50 @@ components:
 
 
 paths:
-  /greeting/{name}:
-    post:
-      operationId: app.post_greeting
-      responses:
-        '200':
-          description: 'test'
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  name:
-                    type: string
-      parameters:
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-
   /filters:
     get:
       operationId: app.get_filters
       description: "returns all filter info"
+      tags: 
+        - filters
       responses:
         "200":
           description: "All available filters"
           content:
             application/json:
               schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filter'
+
+  /filters/{name}:
+    get:
+      operationId: app.get_filter
+      description: "return a specific filters info"
+      tags:
+        - filters
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Filter info"
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/Filter'
+
   /generate:
     post:
-      operationId: app.generate
+      operationId: service.engine.generate
       description: "generate flops based on request body parameters"
+      tags:
+        - engine
       requestBody:
-        content:
-          application/json:
-            schema: 
-              $ref: '#/components/requestBodies/GenerateRequest'
+        $ref: '#/components/requestBodies/GenerateRequest'
       responses:
         "200":
           description: "Engine output"
@@ -94,5 +112,12 @@ paths:
                 type: array
                 items:
                   type: string
+                  example: AsKhQc
+
+tags:
+  - name: filters
+    description: "Information about filters"
+  - name: engine
+    description: "Engine communication and operations"
 
   
