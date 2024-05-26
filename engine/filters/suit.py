@@ -1,6 +1,5 @@
 
-from filters.filter import Filter
-from Card import Card
+from .filter import Filter
 class Suit(Filter):
 
     options = ["Club", "Spade", "Heart", "Diamond"]

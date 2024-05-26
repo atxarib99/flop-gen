@@ -37,6 +37,8 @@ components:
                 type: string
               selection:
                 type: string
+              inverted:
+                type: boolean
         engine:
           type: object
           properties:
@@ -51,10 +53,10 @@ components:
     GenerateRequest:
       description: 'Engine parameters'
       required: true
+      x-body-name: 'generateRequest'
       content:
         application/json:
           schema:
-            x-body-name: 'generateRequest'
             $ref: '#/components/schemas/GenerateRequest'
 
 
@@ -97,7 +99,7 @@ paths:
 
   /generate:
     post:
-      operationId: service.engine.generate
+      operationId: app.generate
       description: "generate flops based on request body parameters"
       tags:
         - engine

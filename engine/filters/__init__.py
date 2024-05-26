@@ -1,1 +1,1 @@
-__all__ = ['connectivity', 'filter', 'highest_card', 'pairing', 'suit', 'texture']
+__all__ = ['connectivity', 'filter', 'highest_card', 'pairing', 'suit', 'texture'] 

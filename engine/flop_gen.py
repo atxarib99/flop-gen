@@ -42,12 +42,12 @@ weights = False
 #how many to generate
 generate = 75
 
-monotone_filter = [Texture('m')]
-paired_filter = [Pairing('unpaired').invert()]
-connected_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('connected')]
-high_gutshot_possible_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('semi_connected_high'), HighestCardAtLeast(11)]
-low_not_connected_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('connected').invert(), HighestCard(10)]
-high_no_gutshot_possible_filter = [Texture('m').invert(), Pairing('unpaired'), Connectivity('semi_connected_high').invert(), Connectivity('connected').invert(), HighestCardAtLeast(11)]
+monotone_filter = [Texture('monotone')]
+#paired_filter = [Pairing('unpaired').invert()]
+#connected_filter = [Texture('monotone').invert(), Pairing('unpaired'), Connectivity('connected')]
+#high_gutshot_possible_filter = [Texture('monotone').invert(), Pairing('unpaired'), Connectivity('semi_connected_high'), HighestCardAtLeast(11)]
+#low_not_connected_filter = [Texture('monotone').invert(), Pairing('unpaired'), Connectivity('connected').invert(), HighestCard(10)]
+#high_no_gutshot_possible_filter = [Texture('monotone').invert(), Pairing('unpaired'), Connectivity('semi_connected_high').invert(), Connectivity('connected').invert(), HighestCardAtLeast(11)]
 
 my_filters = monotone_filter
 

@@ -1,6 +1,5 @@
 
-from filters.filter import Filter
-from Card import Card
+from .filter import Filter
 class Pairing(Filter):
 
     options = ["unpaired", "paired", "tripled"]

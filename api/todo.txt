@@ -1,6 +1,0 @@
-The python dirs should be hierarches by dependencies. So something like:
-- api
-	- engine
-		- filters
-		 	- Card / Deck
-

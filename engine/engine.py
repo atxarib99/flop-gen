@@ -1,13 +1,13 @@
-from Deck import Deck
-from Card import Card
-from filters.highest_card import HighestCard
-from filters.suit import Suit
-from filters.pairing import Pairing
-from filters.texture import Texture
-from filters.connectivity import Connectivity
-from filters.highest_card_at_least import HighestCardAtLeast
+from .Deck import Deck
+from .Card import Card
+from .filters.highest_card import HighestCard
+from .filters.suit import Suit
+from .filters.pairing import Pairing
+from .filters.texture import Texture
+from .filters.connectivity import Connectivity
+from .filters.highest_card_at_least import HighestCardAtLeast
 
-def generate(filters: list):
+def generate(filters: list, engine_parms: dict):
     deck = Deck(numdecks=1)
 
     my_filters = []
@@ -37,10 +37,10 @@ def generate(filters: list):
         return False
 
     #provide weights
-    weights = False
+    weights = bool(engine_parms['weights'])
 
     #how many to generate
-    generate = 75
+    generate = int(engine_parms['flops'])
 
     #set filters
     my_filters = filters

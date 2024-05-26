@@ -1,6 +1,5 @@
 
-from Card import Card
-from filters.filter import Filter
+from .filter import Filter
 class Connectivity(Filter):
 
     options = ['disconnected', 'semi_connected_low', 'semi_connected_high', 'connected']

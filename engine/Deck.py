@@ -1,4 +1,4 @@
-from Card import Card
+from .Card import Card
 import random
 import numpy as np
 
