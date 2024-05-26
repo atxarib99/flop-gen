@@ -7,8 +7,20 @@ from engine import engine
 import engine.filters
 import pkgutil
 
+from connexion.middleware import MiddlewarePosition
+from starlette.middleware.cors import CORSMiddleware
+
 
 app = FlaskApp("flop-gen")
+
+app.add_middleware(
+    CORSMiddleware,
+    position=MiddlewarePosition.BEFORE_EXCEPTION,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.add_api("openapi.yaml", dir='./')
 
