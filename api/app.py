@@ -54,16 +54,13 @@ def generate(generateRequest):
     try:
         for filter in req_filters:
             filters.append(build_filter(filter['name'], filter['selection'], filter['inverted']))
-            print(filters)
     except Exception as e:
         #todo: error msg
         print(e)
         return "ERROR"
         
-    print(filters)
     output = engine.engine.generate(filters, engine_parms)
 
-    print(output)
     return output
 
 def build_filter(filter_name, option, inverted):
