@@ -1,16 +1,18 @@
 import React from "react";
-import PlayingCardsList from "./PlayingCard/Hand/PlayingCard/PlayingCardsList";
+import * as deck from '@letele/playing-cards';
 
 type GeneratedProps = {
-	generated: object;
+	generated: {};
+	hand?: ["1d", "1c", "1s", "1h"];
 };
 
 function GeneratedOutput(props: GeneratedProps) {
 
+	const Card = deck['Sq']
 
 	return (
 		<div>
-			<Hand hide={false} layout={"spread"} cards={this.state.hand} cardSize={this._getCardSize()}/> 
+			<Card style={{ height: '100%', width: '100%' }} />	
 		</div>
 	);
 

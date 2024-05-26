@@ -8,40 +8,46 @@ import { InputLabel, MenuItem } from "@mui/material";
 type FilterProps = {
   filterName: string;
   filterOptions: Array<string>;
+	id: string;
 };
 
-function FilterSelect(props: FilterProps) {
-  const [filterName, setFilterName] = React.useState(props.filterName);
-  const [filterVal, setFilter] = React.useState("");
-  const [filterOptions, setAvailableOptions] = React.useState(
-    props.filterOptions
-  );
+type FilterSelectState = {
+	filterVal: string;
+}
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setFilter(event.target.value as string);
+class FilterSelect extends React.Component<FilterProps, FilterSelectState> {
+
+	state: FilterSelectState = {
+		filterVal: "",
+	};
+
+  handleChange = (event: SelectChangeEvent) => {
+		this.setState({filterVal: event.target.value});
   };
 
-  return (
-    <div className="filter-div">
-      <Box display="flex">
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">{filterName}</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={filterVal}
-            label={filterName}
-            className="filter-form"
-            onChange={handleChange}
-          >
-            {filterOptions.map((filterOption) => {
-              return <MenuItem value={filterOption}>{filterOption}</MenuItem>;
-            })}
-          </Select>
-        </FormControl>
-      </Box>
-    </div>
-  );
+  render() {
+		return(
+			<div id={this.props.id} className="filter-div">
+				<Box display="flex">
+					<FormControl fullWidth>
+						<InputLabel id="demo-simple-select-label">{this.props.filterName}</InputLabel>
+						<Select
+							labelId="demo-simple-select-label"
+							id="demo-simple-select"
+							value={this.state.filterVal}
+							label={this.props.filterName}
+							className="filter-form"
+							onChange={this.handleChange}
+						>
+							{this.props.filterOptions.map((filterOption) => {
+								return <MenuItem value={filterOption}>{filterOption}</MenuItem>;
+							})}
+						</Select>
+					</FormControl>
+				</Box>
+			</div>
+		);
+  };
 }
 
 export default FilterSelect;
