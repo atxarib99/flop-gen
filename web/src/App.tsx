@@ -32,10 +32,30 @@ function App() {
 		console.log('loaded');
 		fetch('http://0.0.0.0:3001/flop-gen/v1/filters')
 		.then(response => response.json())
-		.then(data => setFilters(data))
+		.then(data => {
+		console.log(data);
+		setFilters(data);
+		}
+		)
 		.catch(error => console.log(error));
 	}, []);
 	
+	type CharIterator = (str: string) => string;
+
+	const camelToUnderScore: CharIterator = (str) => {
+		let output = "";
+		str.split('').forEach(char => {
+			if (char == char.toUpperCase()) {
+				output += '_';
+				output += char.toLowerCase();
+			} else {
+				output += char;
+			}
+		});
+
+		return output.substring(1);
+	};
+
 
 	const useGenerateClick = () => {
 		//console.log([filterRefs.current[0].state.filterVal]);
@@ -45,7 +65,8 @@ function App() {
 			if(currRef) {
 				if(currRef.state.filterVal) {
 					var curFilter: Filter = {
-						name: currRef.props.filterName.toLowerCase(),
+//						name: currRef.props.filterName.toLowerCase(),
+						name: camelToUnderScore(currRef.props.filterName),
 						selection: currRef.state.filterVal,
 						inverted: false
 					};
