@@ -97,7 +97,7 @@ function App() {
 								)
 							})
 						}
-						<Button id="generateButton" variant="contained" onClick={useGenerateClick}>
+						<Button className="generateButton" id="generateButton" variant="contained" onClick={useGenerateClick}>
 							Generate!
 						</Button>
 					</div>

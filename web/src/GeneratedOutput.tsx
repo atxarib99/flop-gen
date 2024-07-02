@@ -29,7 +29,7 @@ function GeneratedOutput(props: GeneratedProps) {
         bgcolor: '#EEEEEE',
         position: 'relative',
         overflow: 'auto',
-        maxHeight: '100vh',
+				height: '100vh',
         '& ul': { padding: 0 },
       }}
       subheader={<li />}
