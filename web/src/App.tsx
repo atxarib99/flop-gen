@@ -33,9 +33,8 @@ function App() {
 		fetch('http://0.0.0.0:3001/flop-gen/v1/filters')
 		.then(response => response.json())
 		.then(data => {
-		console.log(data);
-		setFilters(data);
-		}
+			console.log(data);
+			setFilters(data);}
 		)
 		.catch(error => console.log(error));
 	}, []);
@@ -56,16 +55,13 @@ function App() {
 		return output.substring(1);
 	};
 
-
-	const useGenerateClick = () => {
-		//console.log([filterRefs.current[0].state.filterVal]);
+	const useGenerateClick = async () => {
 		let filters: Filter[] = [];
 		Array.from(Array(filterRefs.current.length).keys()).map((val, index) => {
 			var currRef = filterRefs.current[val];
 			if(currRef) {
 				if(currRef.state.filterVal) {
 					var curFilter: Filter = {
-//						name: currRef.props.filterName.toLowerCase(),
 						name: camelToUnderScore(currRef.props.filterName),
 						selection: currRef.state.filterVal,
 						inverted: false
@@ -74,9 +70,8 @@ function App() {
 				}
 			}
 		});
-		console.log(filters);
-		
-		fetch('http://0.0.0.0:3001/flop-gen/v1/generate',{
+		console.log('Generating...');
+		await fetch('http://0.0.0.0:3001/flop-gen/v1/generate',{
 			method: 'POST',
 			body: JSON.stringify({'filters': filters, 'engine': {'flops': 10, 'weights': false}}),
 			headers: {
@@ -84,9 +79,10 @@ function App() {
 			},
 		})
 		.then(response => response.json())
-		.then(data => console.log(data))
+		.then(data => { console.log(data); setFlops(data);})
 		.catch(error => console.log(error));
 	}
+
 
   return (
     <div className="App">
@@ -106,7 +102,7 @@ function App() {
 						</Button>
 					</div>
 					<div className="column">
-						<GeneratedOutput generated={{}}/>
+						{ generatedFlops && <GeneratedOutput generated={generatedFlops}/> }
 					</div>
 					
         </div>
