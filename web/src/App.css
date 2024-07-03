@@ -52,6 +52,10 @@
   width: 100%;
 }
 
+.fullWidth {
+  width: 100%;
+}
+
 .column {
   display: flex;
   flex-direction: column;
@@ -60,7 +64,7 @@
   flex: 1;
 }
 
-Button {
+.generateButton {
   width: 95%;
   margin: auto;
   display: flex;
