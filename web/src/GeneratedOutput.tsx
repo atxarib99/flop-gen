@@ -29,8 +29,6 @@ function GeneratedOutput(props: GeneratedProps) {
 
 		const Cards: string[] = []; 
 		str.match(/.{1,2}/g)?.forEach(val => {
-			console.log(1);
-			console.log(val);
 			const remappedStr = val.substring(1,2).toUpperCase() + val.substring(0,1).toLowerCase().replace('t', '10');
 			Cards.push(remappedStr);
 		});
@@ -39,7 +37,6 @@ function GeneratedOutput(props: GeneratedProps) {
 	}
 	
 	function useCopyClick() {
-		console.log('copy');
 		copyToClipboard(props.generated.toString());
 	};
 
@@ -91,7 +88,6 @@ function GeneratedOutput(props: GeneratedProps) {
 				{
 					props.generated.map((val, index) => {
 						const Cards = stringToCards(val);
-						console.log(Cards);
 						return (
 							<div>
 								{Cards.map((val2, index) => {
