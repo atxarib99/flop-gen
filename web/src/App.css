@@ -35,8 +35,17 @@
   margin: 1em;
 }
 
+.formControl {
+  align-items: start;
+  text-align: start;
+  display: inline-block !important;
+}
+
 .filter-form {
-  min-width: 10em;
+  width: 97%;
+}
+.clearButton {
+  width: 3%;
 }
 
 .filter-div {
