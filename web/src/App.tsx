@@ -3,7 +3,7 @@ import "./App.css";
 import Box from "@mui/system/Box";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
-import { InputLabel, MenuItem, Button } from "@mui/material";
+import { InputLabel, MenuItem, Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import FilterSelect from "./FilterSelect";
 import GeneratedOutput from "./GeneratedOutput";
 
@@ -27,6 +27,11 @@ function App() {
 	const [selectedFilters, setSelectedFilters] = React.useState<Array<{}>>([]);
 	const [generatedFlops, setFlops] = React.useState<Array<String>>([]);
 	const filterRefs = useRef<(FilterSelect | null)[]>([]);
+	const [checked, setChecked] = useState(false);
+
+	const [numFlops, setNumFlops] = useState(10);
+  	const [numFlopsError, setNumFlopsError] = useState('');
+
 
 	useEffect(() => {
 		console.log('loaded');
@@ -38,6 +43,27 @@ function App() {
 		)
 		.catch(error => console.log(error));
 	}, []);
+
+	const handleWeightsChange = (event) => {
+		setChecked(event.target.checked);
+	};
+
+	const handleNumFlopsChange = (event) => {
+	    const input = event.target.value;
+	    // Check if input is a number
+	    if (!isNaN(input)) {
+	      const num = parseInt(input, 10);
+	      // Check if number is within limits (example limits: 0 to 100)
+	      if (num >= 1 && num <= 100) {
+		setNumFlops(num);
+		setNumFlopsError('');
+	      } else {
+		setNumFlopsError('Number must be between 0 and 100');
+	      }
+	    } else {
+	      setNumFlopsError('Please enter a valid number');
+	    }
+	  };
 	
 	type CharIterator = (str: string) => string;
 
@@ -73,7 +99,7 @@ function App() {
 		console.log('Generating...');
 		await fetch('http://0.0.0.0:3001/flop-gen/v1/generate',{
 			method: 'POST',
-			body: JSON.stringify({'filters': filters, 'engine': {'flops': 10, 'weights': false}}),
+			body: JSON.stringify({'filters': filters, 'engine': {'flops': numFlops, 'weights': checked}}),
 			headers: {
       "Content-Type": "application/json",
 			},
@@ -83,13 +109,14 @@ function App() {
 		.catch(error => console.log(error));
 	}
 
-
+  //make second div classname = row on big widths
   return (
     <div className="App">
       <header className="App-header"></header>
       <body className="App-body">
         <div className="row">
 					<div className="column">
+						<h3> Filters </h3>
 						{
 							filters.map((val,index) => {
 								return (
@@ -97,6 +124,33 @@ function App() {
 								)
 							})
 						}
+						<div className="row">
+							<div className="column">
+							<h3> Engine Parameters </h3>
+							</div>
+						</div>
+
+						<div className="centeredRow">
+							<FormControlLabel control={<Checkbox disabled onChange={handleWeightsChange} />} label="Weights" />
+						      <TextField
+							type="number"
+							label="Flops"
+							value={numFlops}
+							onChange={handleNumFlopsChange}
+							error={!!numFlopsError}
+							helperText={numFlopsError}
+							inputProps={{
+							  min: 1,
+							  max: 100,
+							  step: 1,
+							}}
+							variant="outlined"
+							margin="normal"
+						      />
+
+
+
+						</div>
 						<Button className="generateButton" id="generateButton" variant="contained" onClick={useGenerateClick}>
 							Generate!
 						</Button>
