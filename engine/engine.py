@@ -45,13 +45,21 @@ def generate(filters: list, engine_parms: dict):
     #set filters
     my_filters = filters
 
+    #engine limit
+    engine_limit = 1000
+
     if weights:
         # Generate 1m flops
         while generate > 0:
+
+            if engine_limit <= 0:
+                return {"error": "Engine limit reached!"}
+            
             deck = Deck(numdecks=1)
             board = (deck.nextCard(), deck.nextCard(), deck.nextCard())
             #check if any filters are invalidated
             if False in [True if filter.validate(board) else False for filter in my_filters]:
+                engine_limit -= 1
                 continue
             #otherwise check if board already in previous
             exists = False
@@ -65,13 +73,19 @@ def generate(filters: list, engine_parms: dict):
                 boards.append((set(board), 1))
 
             #always decrement
+            engine_limit -= 1
             generate-=1
     else:
         while generate > 0:
+
+            if engine_limit <= 0:
+                return {"error": "Engine limit reached!"}
+
             deck = Deck(numdecks=1)
             board = (deck.nextCard(), deck.nextCard(), deck.nextCard())
             #check if any filters are invalidated
             if False in [True if filter.validate(board) else False for filter in my_filters]:
+                engine_limit -= 1
                 continue
             #otherwise check if board already in previous
             exists = False
@@ -85,6 +99,9 @@ def generate(filters: list, engine_parms: dict):
             if not exists:
                 boards.append(set(board))
                 generate-=1
+
+            #always decrement engine limit
+            engine_limit -= 1
             
     sorted_boards = []
     for board in boards:

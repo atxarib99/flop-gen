@@ -69,6 +69,9 @@ def generate(generateRequest):
         
     output = engine.engine.generate(filters, engine_parms)
 
+    if type(output) is dict:
+        return output['error'], 400
+
     return output
 
 def build_filter(filter_name, option, inverted):
