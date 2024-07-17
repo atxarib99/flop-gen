@@ -10,10 +10,9 @@ import pkgutil
 from connexion.middleware import MiddlewarePosition
 from starlette.middleware.cors import CORSMiddleware
 
+application = FlaskApp("flop-gen")
 
-app = FlaskApp("flop-gen")
-
-app.add_middleware(
+application.add_middleware(
     CORSMiddleware,
     position=MiddlewarePosition.BEFORE_EXCEPTION,
     allow_origins=["*"],
@@ -22,10 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.add_api("openapi.yaml", dir='./')
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3001)
+application.add_api("openapi.yaml", dir='./')
 
 def get_filters():
     filter_out = []
@@ -88,3 +84,6 @@ def build_filter(filter_name, option, inverted):
                     built.invert()
 
     return built
+
+if __name__ == "__main__":
+    application.run(host="0.0.0.0", port=3001)
