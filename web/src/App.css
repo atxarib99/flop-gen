@@ -61,6 +61,15 @@
   width: 100%;
 }
 
+.centeredRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .fullWidth {
   width: 100%;
 }
