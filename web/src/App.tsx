@@ -37,7 +37,7 @@ function App() {
 
 	useEffect(() => {
 		console.log('loaded');
-		fetch('http://127.0.0.1:3001/flop-gen/v1/filters')
+		fetch('https://dev.arib.dev:8000/flop-gen/v1/filters')
 		.then(response => response.json())
 		.then(data => {
 			console.log(data);
@@ -99,7 +99,7 @@ function App() {
 			}
 		});
 		console.log('Generating...');
-		await fetch('http://127.0.0.1:3001/flop-gen/v1/generate',{
+		await fetch('https://dev.arib.dev:8000/flop-gen/v1/generate',{
 			method: 'POST',
 			body: JSON.stringify({'filters': filters, 'engine': {'flops': numFlops, 'weights': checked}}),
 			headers: {
