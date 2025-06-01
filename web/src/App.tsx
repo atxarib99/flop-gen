@@ -3,7 +3,7 @@ import "./App.css";
 import Box from "@mui/system/Box";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
-import { InputLabel, MenuItem, Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { Snackbar, Alert, InputLabel, MenuItem, Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import FilterSelect from "./FilterSelect";
 import GeneratedOutput from "./GeneratedOutput";
 
@@ -28,6 +28,8 @@ function App() {
 	const [generatedFlops, setFlops] = React.useState<Array<String>>([]);
 	const filterRefs = useRef<(FilterSelect | null)[]>([]);
 	const [checked, setChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
 	const [numFlops, setNumFlops] = useState(10);
   	const [numFlopsError, setNumFlopsError] = useState('');
@@ -104,10 +106,25 @@ function App() {
       "Content-Type": "application/json",
 			},
 		})
-		.then(response => response.json())
+		.then(response => {
+      if(!response.ok) {
+        //TODO: pull this info from the response
+        throw new Error(`Engine limit reached! Status: ${response.status}`);
+      }
+      return response.json();
+    })
 		.then(data => { console.log(data); setFlops(data);})
-		.catch(error => console.log(error));
+		.catch(error => {
+			console.log(error);
+			setErrorMessage(error.message);
+			setSnackbarOpen(true); 
+		});
 	}
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setSnackbarOpen(false);
+  };
 
   //make second div classname = row on big widths
   return (
@@ -158,6 +175,17 @@ function App() {
 					<div className="column">
 						{ generatedFlops && <GeneratedOutput generated={generatedFlops}/> }
 					</div>
+
+					<Snackbar
+						open={snackbarOpen}
+						autoHideDuration={6000}
+						onClose={handleSnackbarClose}
+						anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+					>
+						<Alert onClose={handleSnackbarClose} severity="error" sx={{ width: '100%' }}>
+							{errorMessage}
+						</Alert>
+					</Snackbar>
 					
         </div>
       </body>
