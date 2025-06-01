@@ -2,6 +2,7 @@
   "name": "flop-gen",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://atxarib99.github.io/flop-gen",
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
