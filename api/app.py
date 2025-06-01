@@ -70,7 +70,7 @@ def generate(generateRequest):
     output = engine.engine.generate(filters, engine_parms)
 
     if type(output) is dict:
-        return output['error'], 400
+        return output['error'], 500
 
     return output
 

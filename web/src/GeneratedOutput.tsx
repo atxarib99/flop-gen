@@ -84,8 +84,8 @@ function GeneratedOutput(props: GeneratedProps) {
 					'& ul': { padding: 0 },
 				}}
 				subheader={<li />}
-			>	
-				{
+			>
+				{ props.generated.length > 0 &&
 					props.generated.map((val, index) => {
 						const Cards = stringToCards(val);
 						return (

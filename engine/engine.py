@@ -53,7 +53,7 @@ def generate(filters: list, engine_parms: dict):
         while generate > 0:
 
             if engine_limit <= 0:
-                return {"error": "Engine limit reached!"}
+                return (500,{"error": "Engine limit reached!"})
             
             deck = Deck(numdecks=1)
             board = (deck.nextCard(), deck.nextCard(), deck.nextCard())
