@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/flop-gen/static/css/main.571a3fbd.css",
+    "main.js": "/flop-gen/static/js/main.618f4a09.js",
+    "static/js/453.66c3b8b8.chunk.js": "/flop-gen/static/js/453.66c3b8b8.chunk.js",
+    "index.html": "/flop-gen/index.html",
+    "main.571a3fbd.css.map": "/flop-gen/static/css/main.571a3fbd.css.map",
+    "main.618f4a09.js.map": "/flop-gen/static/js/main.618f4a09.js.map",
+    "453.66c3b8b8.chunk.js.map": "/flop-gen/static/js/453.66c3b8b8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.571a3fbd.css",
+    "static/js/main.618f4a09.js"
+  ]
+}
